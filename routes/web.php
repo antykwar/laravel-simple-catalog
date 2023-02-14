@@ -12,3 +12,4 @@ Route::get('/about', [IndexController::class, 'about'])->name('page-about');
 
 // Product pages
 Route::get('/products', [ProductsController::class, 'products'])->name('products-list');
+Route::get('/product/{productId}', [ProductsController::class, 'productCard'])->name('product-card');
