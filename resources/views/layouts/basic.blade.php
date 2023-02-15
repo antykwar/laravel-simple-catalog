@@ -25,12 +25,13 @@
                     <a href="{{ route('products-list') }}">Products</a>
                 </li>
             </ul>
-{{--            <ul class="nav navbar-nav navbar-right">--}}
-{{--                <li><a href="#">New product</a></li>--}}
-{{--            </ul>--}}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ route('product-create') }}">New product</a></li>
+            </ul>
         </div>
     </nav>
     <div class="container">
+        @include('layouts.basic-flash-messages')
         @yield('content')
     </div>
 </body>
