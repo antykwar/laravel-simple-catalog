@@ -6,13 +6,13 @@ use App\Models\Product;
 
 class ProductsController extends Controller
 {
-    public function products()
+    public function productList()
     {
         $products = Product::query()
             ->orderBy('price')
             ->paginate(1);
 
-        return view('products')->with('products', $products);
+        return view('products.list')->with('products', $products);
     }
 
     public function productCard(int $productId)
@@ -23,6 +23,6 @@ class ProductsController extends Controller
             abort(404);
         }
 
-        return view('product-card')->with('product', $product);
+        return view('products.card')->with('product', $product);
     }
 }

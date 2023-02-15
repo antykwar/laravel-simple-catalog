@@ -4,12 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductsController;
 
-// Main page
 Route::get('/', [IndexController::class, 'home'])->name('home');
-
-// Project info pages
 Route::get('/about', [IndexController::class, 'about'])->name('page-about');
 
-// Product pages
-Route::get('/products', [ProductsController::class, 'products'])->name('products-list');
-Route::get('/product/{productId}', [ProductsController::class, 'productCard'])->name('product-card');
+Route::prefix('products')->group(static function() {
+    Route::get('list', [ProductsController::class, 'productList'])->name('products-list');
+    Route::get('{productId}', [ProductsController::class, 'productCard'])->name('product-card');
+});
