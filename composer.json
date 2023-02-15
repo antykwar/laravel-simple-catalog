@@ -10,7 +10,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "laravelcollective/html": "^6.4"
+        "laravelcollective/html": "^6.4",
+        "wendelladriel/laravel-validated-dto": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

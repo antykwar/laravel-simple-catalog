@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\BasicComponents\BasicModel;
 
-class Product extends Model
+class Product extends BasicModel
 {
-    use HasFactory;
+
 }
