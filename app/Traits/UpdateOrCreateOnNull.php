@@ -2,12 +2,12 @@
 
 namespace App\Traits;
 
-use App\BasicComponents\BasicData;
 use App\BasicComponents\BasicModel;
+use Spatie\LaravelData\Data;
 
 trait UpdateOrCreateOnNull
 {
-    public static function updateOrCreateOnNull(BasicData $data): BasicModel
+    public static function updateOrCreateOnNull(Data $data): BasicModel
     {
         $model = new static();
         $primaryKeyValue = $data->{$model->getKeyName()};

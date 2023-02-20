@@ -11,7 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.4",
-        "wendelladriel/laravel-validated-dto": "^2.2"
+        "spatie/laravel-data": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

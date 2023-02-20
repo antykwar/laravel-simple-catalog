@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Product\UpdateProductAction;
-use App\DTOs\ProductData;
+use App\DataObjects\Product\ProductData;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use WendellAdriel\ValidatedDTO\Exceptions\CastTargetException;
-use WendellAdriel\ValidatedDTO\Exceptions\MissingCastTypeException;
 
 class ProductsController extends Controller
 {
@@ -31,17 +29,13 @@ class ProductsController extends Controller
         return view('products.card')->with('product', $product);
     }
 
-    /**
-     * @throws CastTargetException
-     * @throws MissingCastTypeException
-     */
     public function productCreate(Request $request)
     {
         if (!$request->isMethod('POST')) {
             return view('products.create');
         }
 
-        $newProductDTO = ProductData::fromRequest($request);
+        $newProductDTO = ProductData::from($request);
         UpdateProductAction::execute($newProductDTO);
 
         return redirect()

@@ -3,7 +3,7 @@
 namespace App\Actions\Product;
 
 use App\BasicComponents\BasicModel;
-use App\DTOs\ProductData;
+use App\DataObjects\Product\ProductData;
 use App\Models\Product;
 
 class UpdateProductAction
