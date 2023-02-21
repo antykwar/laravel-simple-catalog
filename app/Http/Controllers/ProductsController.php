@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Product\UpdateProductAction;
 use App\DataObjects\Product\ProductData;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -15,31 +16,44 @@ class ProductsController extends Controller
             ->orderBy('price')
             ->paginate(5);
 
-        return view('products.list')->with('products', $products);
+        return view('product.list')
+            ->with('products', $products);
     }
 
     public function productCard(int $productId)
     {
         $product = Product::find($productId);
-
         if (!$product) {
             abort(404);
         }
+        $productData = ProductData::from($product);
 
-        return view('products.card')->with('product', $product);
+        return view('product.card')
+            ->with('productData', $productData);
     }
 
-    public function productCreate(Request $request)
+    public function productUpdateForm(?int $productId = null)
     {
-        if (!$request->isMethod('POST')) {
-            return view('products.create');
+        $product = new Product();
+        if ($productId && !$product = Product::find($productId)) {
+            abort(404);
         }
 
+        $productData = ProductData::from($product);
+        return view('product.update')
+            ->with('productData', $productData);
+    }
+
+    public function productUpdate(Request $request): RedirectResponse
+    {
         $newProductDTO = ProductData::from($request);
-        UpdateProductAction::execute($newProductDTO);
+        $productData = UpdateProductAction::execute($newProductDTO);
+
+        $operationName = ($newProductDTO->id !== null) ? 'UPDATED' : 'ADDED';
+        $successMessage = "Product successfully {$operationName}!";
 
         return redirect()
-            ->route('product-create')
-            ->with('success', 'Product successfully added');
+            ->route('product-edit-form', ['productId' => $productData->id])
+            ->with('success', $successMessage);
     }
 }

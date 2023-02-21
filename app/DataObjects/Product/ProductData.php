@@ -6,13 +6,10 @@ use Spatie\LaravelData\Data;
 
 class ProductData extends Data
 {
-    public ?int $id;
-
-    public string $name;
-
-    public float $price;
-
-    public string $description;
+    public ?int $id = null;
+    public ?string $name = null;
+    public ?float $price = null;
+    public ?string $description = null;
 
     public static function rules(): array
     {

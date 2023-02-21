@@ -26,7 +26,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ route('product-create') }}">New product</a></li>
+                <li><a href="{{ route('product-create-form') }}">New product</a></li>
             </ul>
         </div>
     </nav>
