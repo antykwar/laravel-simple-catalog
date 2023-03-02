@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Product\DeleteProductAction;
 use App\Actions\Product\UpdateProductAction;
 use App\DataObjects\Product\ProductData;
 use App\Models\Product;
@@ -55,5 +56,25 @@ class ProductsController extends Controller
         return redirect()
             ->route('product-edit-form', ['productId' => $productData->id])
             ->with('success', $successMessage);
+    }
+
+    public function productDelete(?int $productId): RedirectResponse
+    {
+        if (!$productId) {
+            return redirect()
+                ->route('products-list')
+                ->with('error', 'Missing product ID!');
+        }
+
+        $deleteResult = DeleteProductAction::execute($productId);
+        if ($deleteResult === false) {
+            return redirect()
+                ->route('products-list')
+                ->with('error', "Product with ID={$productId} not found!");
+        }
+
+        return redirect()
+            ->route('products-list')
+            ->with('success', "{$deleteResult->name} (ID={$deleteResult->id}) successfully removed!");
     }
 }

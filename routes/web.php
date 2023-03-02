@@ -16,10 +16,9 @@ Route::prefix('products')->group(static function() {
         ->name('product-create-form');
     Route::get('edit/{productId}', [ProductsController::class, 'productUpdateForm'])
         ->name('product-edit-form');
-
     Route::post('create', [ProductsController::class, 'productUpdate'])
         ->name('product-create');
-
-    Route::get('delete/{productId}', [ProductsController::class, 'productCard'])
+    Route::get('delete/{productId}', [ProductsController::class, 'productDelete'])
+        ->where('productId', '[1-9][0-9]?')
         ->name('product-delete');
 });

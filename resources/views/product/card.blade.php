@@ -16,9 +16,9 @@
             href="{{ route('product-edit-form', ['productId' => $productData->id]) }}"
             class="btn btn-default"
         >Edit</a>
-{{--        <a--}}
-{{--            href="{{ route('product-delete', ['productId' => $product->id]) }}"--}}
-{{--            class="btn btn-danger"--}}
-{{--        >Delete</a>--}}
+        <a
+            href="{{ route('product-delete', ['productId' => $productData->id]) }}"
+            class="btn btn-danger"
+        >Delete</a>
     </div>
 @stop
