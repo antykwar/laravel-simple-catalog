@@ -16,7 +16,7 @@
             @foreach($products as $product)
                 <tr>
                     <td>
-                        <a href="{{ route('product-card', ['productId' => $product->id]) }}" target="_blank">
+                        <a href="{{ route('product-card', ['productId' => $product->id]) }}">
                             {{ $product->name }}
                         </a>
                     </td>

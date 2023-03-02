@@ -12,13 +12,13 @@
         <h3>{{ $productData->price }}</h3>
         <h3>{{ $productData->description }}</h3>
         <hr/>
-        <a
-            href="{{ route('product-edit-form', ['productId' => $productData->id]) }}"
-            class="btn btn-default"
-        >Edit</a>
-        <a
-            href="{{ route('product-delete', ['productId' => $productData->id]) }}"
-            class="btn btn-danger"
-        >Delete</a>
+        {!! Form::open(['route' => ['product-delete'], 'class' => "form-horizontal"]) !!}
+            <a
+                href="{{ route('product-edit-form', ['productId' => $productData->id]) }}"
+                class="btn btn-default"
+            >Edit</a>
+            {!! Form::input('hidden', 'productId', value: $productData->id) !!}
+            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+        {!! Form::close() !!}
     </div>
 @stop

@@ -58,8 +58,10 @@ class ProductsController extends Controller
             ->with('success', $successMessage);
     }
 
-    public function productDelete(?int $productId): RedirectResponse
+    public function productDelete(Request $request): RedirectResponse
     {
+        $productId = (int)$request->post('productId');
+
         if (!$productId) {
             return redirect()
                 ->route('products-list')
