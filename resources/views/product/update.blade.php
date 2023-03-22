@@ -1,23 +1,23 @@
 @php
-    /* @var \App\DataObjects\Product\ProductData $productData*/
+    /* @var \App\Models\Product $product*/
 @endphp
 
 @extends('layouts.basic')
 
-@if ($productData->id)
-    @section('title', 'Update ' . $productData->name . ' card')
+@if ($product->id)
+    @section('title', 'Update ' . $product->name . ' card')
 @else
     @section('title', 'Create new product card')
 @endif
 
 @section('content')
-    {!! Form::open(['route' => ['product-create'], 'class' => "form-horizontal"]) !!}
-        @if ($productData->id)
-            {!! Form::hidden('id', $productData->id) !!}
+    {!! Form::open(['route' => ['product-create'], 'class' => "form-horizontal", 'enctype' => 'multipart/form-data']) !!}
+        @if ($product->id)
+            {!! Form::hidden('id', $product->id) !!}
         @endif
         <div class="form-group">
-            @if ($productData->id)
-                <h1>{!! $productData->name !!} card</h1>
+            @if ($product->id)
+                <h1>{!! $product->name !!} card</h1>
             @else
                 <h1>New product</h1>
             @endif
@@ -27,7 +27,7 @@
             {!! Form::input(
                 'text',
                 'name',
-                value: $productData->name,
+                value: $product->name,
                 options: ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Product name', 'required']) !!}
             @error('name')
                 <span class="text-danger">{{ $message }}</span>
@@ -38,7 +38,7 @@
             {!! Form::input(
                 'text',
                 'price',
-                value: $productData->price,
+                value: $product->price,
                 options: ['class' => 'form-control', 'id' => 'price', 'placeholder' => 'Product price', 'required']
              ) !!}
             @error('price')
@@ -46,10 +46,17 @@
             @enderror
         </div>
         <div class="form-group">
+            {!! Form::label('image', 'Product image') !!}
+            {!! Form::file('image') !!}
+            @error('image')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="form-group">
             {!! Form::label('description', 'Description') !!}
             {!! Form::textarea(
                 'description',
-                value: $productData->description,
+                value: $product->description,
                 options: [
                 'id' => 'description',
                 'cols' => 30,
@@ -61,7 +68,7 @@
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-        @if ($productData->id)
+        @if ($product->id)
             {!! Form::submit('Save changes', ['class' => 'btn btn-primary']) !!}
         @else
             {!! Form::submit('Add product', ['class' => 'btn btn-primary']) !!}

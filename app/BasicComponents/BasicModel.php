@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class BasicModel extends Model
 {
     use UpdateOrCreateOnNull;
-
-    protected $guarded = [];
 }

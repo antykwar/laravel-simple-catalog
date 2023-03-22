@@ -2,14 +2,24 @@
 
 namespace App\Actions\Product;
 
-use App\DataObjects\Product\ProductData;
+use App\Http\Requests\ProductsUpdateRequest;
 use App\Models\Product;
+use App\Services\Product\ImageManager;
 
 class UpdateProductAction
 {
-    public static function execute(ProductData $productData): ProductData
+    public static function execute(ProductsUpdateRequest $request): Product
     {
-        $product = Product::updateOrCreateOnNull($productData);
-        return ProductData::from($product);
+        $data = $request->post();
+
+        if ($uploadedImage = $request->file('image')) {
+            $fileName = ImageManager::saveUploadedImage($uploadedImage);
+            $data['image_file'] = $fileName;
+            $data['image_name'] = $uploadedImage->getClientOriginalName();
+        }
+
+        /** @var Product $product */
+        $product = Product::updateOrCreateOnNull($data);
+        return $product;
     }
 }

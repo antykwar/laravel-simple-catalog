@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Product\DeleteProductAction;
 use App\Actions\Product\UpdateProductAction;
-use App\DataObjects\Product\ProductData;
+use App\Http\Requests\ProductsUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,10 +27,9 @@ class ProductsController extends Controller
         if (!$product) {
             abort(404);
         }
-        $productData = ProductData::from($product);
 
         return view('product.card')
-            ->with('productData', $productData);
+            ->with('product', $product);
     }
 
     public function productUpdateForm(?int $productId = null)
@@ -40,21 +39,19 @@ class ProductsController extends Controller
             abort(404);
         }
 
-        $productData = ProductData::from($product);
         return view('product.update')
-            ->with('productData', $productData);
+            ->with('product', $product);
     }
 
-    public function productUpdate(Request $request): RedirectResponse
+    public function productUpdate(ProductsUpdateRequest $request): RedirectResponse
     {
-        $newProductDTO = ProductData::from($request);
-        $productData = UpdateProductAction::execute($newProductDTO);
+        $product = UpdateProductAction::execute($request);
 
-        $operationName = ($newProductDTO->id !== null) ? 'UPDATED' : 'ADDED';
+        $operationName = ($request->post('id') !== null) ? 'UPDATED' : 'ADDED';
         $successMessage = "Product successfully {$operationName}!";
 
         return redirect()
-            ->route('product-edit-form', ['productId' => $productData->id])
+            ->route('product-edit-form', ['productId' => $product->id])
             ->with('success', $successMessage);
     }
 
@@ -68,8 +65,8 @@ class ProductsController extends Controller
                 ->with('error', 'Missing product ID!');
         }
 
-        $deleteResult = DeleteProductAction::execute($productId);
-        if ($deleteResult === false) {
+        $deletedProduct = DeleteProductAction::execute($productId);
+        if ($deletedProduct === false) {
             return redirect()
                 ->route('products-list')
                 ->with('error', "Product with ID={$productId} not found!");
@@ -77,6 +74,6 @@ class ProductsController extends Controller
 
         return redirect()
             ->route('products-list')
-            ->with('success', "{$deleteResult->name} (ID={$deleteResult->id}) successfully removed!");
+            ->with('success', "{$deletedProduct->name} (ID={$deletedProduct->id}) successfully removed!");
     }
 }

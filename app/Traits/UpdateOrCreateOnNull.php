@@ -3,23 +3,21 @@
 namespace App\Traits;
 
 use App\BasicComponents\BasicModel;
-use Spatie\LaravelData\Data;
 
 trait UpdateOrCreateOnNull
 {
-    public static function updateOrCreateOnNull(Data $data): BasicModel
+    public static function updateOrCreateOnNull(array $data): BasicModel
     {
         $model = new static();
-        $primaryKeyValue = $data->{$model->getKeyName()};
+        $primaryKeyValue = $data[$model->getKeyName()];
 
         if (!empty($primaryKeyValue)) {
             $model = static::find($primaryKeyValue);
         }
 
-        $dataToFill = $data->toArray();
-        unset($dataToFill[$model->getKeyName()]);
+        unset($data[$model->getKeyName()]);
 
-        $model->fill($dataToFill);
+        $model->fill($data);
         $model->save();
 
         return $model;
