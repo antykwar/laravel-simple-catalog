@@ -2,33 +2,44 @@
 
 namespace App\Services\Product;
 
-use App\Models\Product;
+use App\Interfaces\EntityWithImagesInterface;
+use App\Models\Image;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class ImageManager
 {
-    public function __construct(public Product $product) {}
-
-    public function clearOldImages(bool $isDeleteMode = false): void
+    public static function clearImages(EntityWithImagesInterface $entity): void
     {
-        $imageFile = $this->product->getOriginal('image_file');
-
-        $shouldKeepImage = $isDeleteMode
-            ? $imageFile === null
-            : $imageFile === null || $imageFile === $this->product->image_file;
-
-        if ($shouldKeepImage || !Storage::exists('/images/products/' . $imageFile)) {
+        if (!isset($entity->images) || !($entity->images instanceof Collection)) {
             return;
         }
-
-        Storage::delete('/images/products/' . $imageFile);
+        $entity->images->each(static function(Image $image) {
+            $image->delete();
+        });
     }
 
-    public static function saveUploadedImage(UploadedFile $uploadedImage): string
+    public static function deleteImageFiles(Image $image): void
     {
-        $fileName = 'product_' . time() . '.' . $uploadedImage->getClientOriginalExtension();
-        $uploadedImage->storeAs('/images/products', $fileName);
-        return $fileName;
+        $imagePath = $image->entity->getPathToImages();
+        if (!Storage::exists($imagePath . $image->getFileName())) {
+            return;
+        }
+        Storage::delete($imagePath . $image->getFileName());
+    }
+
+    public static function saveUploadedImage(EntityWithImagesInterface $entity, UploadedFile $uploadedImage): Image
+    {
+        $fileName = $entity->getImageFilename();
+
+        $image = new Image();
+        $image->original_name = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
+        $image->original_extension = $uploadedImage->getClientOriginalExtension();
+        $image->file_name = $fileName;
+        $image->file_extension = $uploadedImage->getClientOriginalExtension();
+
+        $uploadedImage->storeAs($entity->getPathToImages(), $image->getFileName());
+        return $image;
     }
 }

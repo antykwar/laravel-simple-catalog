@@ -11,15 +11,18 @@ class UpdateProductAction
     public static function execute(ProductsUpdateRequest $request): Product
     {
         $data = $request->post();
+        $image = null;
 
         if ($uploadedImage = $request->file('image')) {
-            $fileName = ImageManager::saveUploadedImage($uploadedImage);
-            $data['image_file'] = $fileName;
-            $data['image_name'] = $uploadedImage->getClientOriginalName();
+            $image = ImageManager::saveUploadedImage(new Product(), $uploadedImage);
         }
 
         /** @var Product $product */
         $product = Product::updateOrCreateOnNull($data);
+        if ($image) {
+            $product->images()->save($image);
+        }
+
         return $product;
     }
 }

@@ -9,13 +9,16 @@ trait UpdateOrCreateOnNull
     public static function updateOrCreateOnNull(array $data): BasicModel
     {
         $model = new static();
-        $primaryKeyValue = $data[$model->getKeyName()];
+        $keyName = $model->getKeyName();
+        $primaryKeyValue = $data[$keyName] ?? null;
 
         if (!empty($primaryKeyValue)) {
             $model = static::find($primaryKeyValue);
         }
 
-        unset($data[$model->getKeyName()]);
+        if (isset($data[$keyName])) {
+            unset($data[$keyName]);
+        }
 
         $model->fill($data);
         $model->save();
