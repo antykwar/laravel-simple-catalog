@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\BasicComponents\BasicModel;
 use App\Interfaces\EntityWithImagesInterface;
+use App\Models\Images\ImageSize;
 use App\Services\ImageManager;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -36,6 +37,11 @@ class Product extends BasicModel implements EntityWithImagesInterface
     public function getImageFilename(): string
     {
         return 'product_' . time();
+    }
+
+    public function getSmallThumbSize(): ImageSize
+    {
+        return new ImageSize(300, 300);
     }
 
     public static function boot(): void

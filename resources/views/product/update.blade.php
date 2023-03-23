@@ -21,6 +21,11 @@
             @else
                 <h1>New product</h1>
             @endif
+            @if(count($product->images) > 0)
+                <div class="container">
+                    @include('product.images.edit', ['product' => $product])
+                </div>
+            @endif
         </div>
         <div class="form-group">
             {!! Form::label('name', 'Name') !!}
