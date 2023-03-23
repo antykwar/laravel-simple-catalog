@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Product;
+namespace App\Services;
 
 use App\Interfaces\EntityWithImagesInterface;
 use App\Models\Image;
@@ -10,6 +10,20 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageManager
 {
+    public static function saveUploadedImage(EntityWithImagesInterface $entity, UploadedFile $uploadedImage): Image
+    {
+        $fileName = $entity->getImageFilename();
+
+        $image = new Image();
+        $image->original_name = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
+        $image->original_extension = $uploadedImage->getClientOriginalExtension();
+        $image->file_name = $fileName;
+        $image->file_extension = $uploadedImage->getClientOriginalExtension();
+
+        $uploadedImage->storeAs($entity->getPathToImages(), $image->getFileName());
+        return $image;
+    }
+
     public static function clearImages(EntityWithImagesInterface $entity): void
     {
         if (!isset($entity->images) || !($entity->images instanceof Collection)) {
@@ -27,19 +41,5 @@ class ImageManager
             return;
         }
         Storage::delete($imagePath . $image->getFileName());
-    }
-
-    public static function saveUploadedImage(EntityWithImagesInterface $entity, UploadedFile $uploadedImage): Image
-    {
-        $fileName = $entity->getImageFilename();
-
-        $image = new Image();
-        $image->original_name = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
-        $image->original_extension = $uploadedImage->getClientOriginalExtension();
-        $image->file_name = $fileName;
-        $image->file_extension = $uploadedImage->getClientOriginalExtension();
-
-        $uploadedImage->storeAs($entity->getPathToImages(), $image->getFileName());
-        return $image;
     }
 }

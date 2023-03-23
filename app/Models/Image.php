@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\BasicComponents\BasicModel;
 use App\Interfaces\EntityWithImagesInterface;
-use App\Services\Product\ImageManager;
+use App\Services\ImageManager;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**

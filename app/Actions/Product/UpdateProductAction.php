@@ -4,7 +4,7 @@ namespace App\Actions\Product;
 
 use App\Http\Requests\ProductsUpdateRequest;
 use App\Models\Product;
-use App\Services\Product\ImageManager;
+use App\Services\ImageManager;
 
 class UpdateProductAction
 {
