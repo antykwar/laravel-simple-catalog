@@ -8,11 +8,6 @@ class IndexController extends Controller
     {
         return view('index.home');
     }
-
-    public function about()
-    {
-        return view('index.about');
-    }
 }
 
 // todo:

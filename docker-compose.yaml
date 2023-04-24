@@ -44,9 +44,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ecommerce
-      POSTGRES_PASSWORD: ecommerce
-      POSTGRES_DB: ecommerce
+      POSTGRES_USER: simple_catalog
+      POSTGRES_PASSWORD: simple_catalog
+      POSTGRES_DB: simple_catalog
     ports:
       - "5432:5432"
 

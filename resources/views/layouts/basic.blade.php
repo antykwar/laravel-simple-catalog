@@ -18,9 +18,6 @@
                 <li class="{{ Route::is('home') ? 'active' : '' }}">
                     <a href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="{{ Route::is('page-about') ? 'active' : '' }}">
-                    <a href="{{ route('page-about') }}">About</a>
-                </li>
                 <li class="{{ Route::is('products-list') ? 'active' : '' }}">
                     <a href="{{ route('products-list') }}">Products</a>
                 </li>
