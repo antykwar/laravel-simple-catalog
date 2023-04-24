@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductImagesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductsController;
@@ -22,4 +23,9 @@ Route::prefix('products')->group(static function() {
 
     Route::post('delete', [ProductsController::class, 'productDelete'])
         ->name('product-delete');
+});
+
+Route::prefix('product-images')->group(static function() {
+    Route::post('delete', [ProductImagesController::class, 'imageDelete'])
+        ->name('product-image-delete');
 });

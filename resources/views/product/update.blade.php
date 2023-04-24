@@ -11,7 +11,7 @@
 @endif
 
 @section('content')
-    {!! Form::open(['route' => ['product-create'], 'class' => "form-horizontal", 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['route' => ['product-create'], 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
         @if ($product->id)
             {!! Form::hidden('id', $product->id) !!}
         @endif
