@@ -15,8 +15,10 @@
         <div class="col-sm-4">
             <img
                 src="{{ asset('storage' . $product->getPathToImages() . $image->getSmallThumbName()) }}"
-                class="img-rounded"
-                alt="">
+                class="img-rounded img-product"
+                alt=""
+                data-id="{{ $image->id }}"
+                data-url="{{ route('product-image-delete', absolute: false) }}">
         </div>
     @endforeach
     </div>

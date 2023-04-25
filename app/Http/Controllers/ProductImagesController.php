@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Product\DeleteProductAction;
-use App\Actions\Product\UpdateProductAction;
-use App\Http\Requests\ProductsUpdateRequest;
-use App\Models\Product;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Response;
+use App\Http\Requests\ProductImageDeleteRequest;
+use Illuminate\Support\Facades\Session;
 
 class ProductImagesController extends Controller
 {
-    public function imageDelete(): JsonResponse
+    public function imageDelete(ProductImageDeleteRequest $request): void
     {
-        return Response::json();
+        Session::flash('error', 'Image was not found!');
+        Session::flash('success', 'Image successfully removed!');
     }
 }
