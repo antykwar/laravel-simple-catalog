@@ -7,6 +7,7 @@ services:
     volumes:
       - ./:/app
       - .docker/php-fpm/docker-php-ext-opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+      - .docker/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - .docker/php-fpm/docker-php-custom-settings.ini:/usr/local/etc/php/conf.d/docker-php-custom-settings.ini
     working_dir: /app
     environment:
