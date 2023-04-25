@@ -2,13 +2,13 @@
 
 namespace App\Actions\Product;
 
-use App\Http\Requests\ProductsUpdateRequest;
+use App\Http\Requests\Products\UpdateRequest;
 use App\Models\Product;
 use App\Services\ImageManager;
 
 class UpdateProductAction
 {
-    public static function execute(ProductsUpdateRequest $request): Product
+    public static function execute(UpdateRequest $request): Product
     {
         $data = $request->post();
         $image = null;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Product\DeleteProductAction;
 use App\Actions\Product\UpdateProductAction;
-use App\Http\Requests\ProductsUpdateRequest;
+use App\Http\Requests\Products\UpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class ProductsController extends Controller
             ->with('product', $product);
     }
 
-    public function productUpdate(ProductsUpdateRequest $request): RedirectResponse
+    public function productUpdate(UpdateRequest $request): RedirectResponse
     {
         $product = UpdateProductAction::execute($request);
 

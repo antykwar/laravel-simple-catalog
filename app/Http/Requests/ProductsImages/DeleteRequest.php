@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\ProductsImages;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AllowedToFallFormRequest;
 
-class ProductImageDeleteRequest extends FormRequest
+class DeleteRequest extends AllowedToFallFormRequest
 {
     public function authorize(): bool
     {
